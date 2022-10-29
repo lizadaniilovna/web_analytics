@@ -19,6 +19,13 @@ function App() {
           <Route path="/result" component={Result} />
         </Switch>
       </Router>
+
+      <a href="https://metrika.yandex.ru/stat/?id=90966830&amp;from=informer" target="_blank" rel="noreferrer">
+        <img
+          src="https://metrika-informer.com/informer/90966830/3_1_20EC20FF_00CC00FF_0_pageviews"
+          style={{ width: "88px", height: "31px", border: 0 }} alt="Яндекс.Метрика"
+          title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)" />
+      </a>
     </>
   );
 }
