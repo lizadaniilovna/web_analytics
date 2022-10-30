@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Confetti from "react-confetti";
+import { Redirect } from "react-router-dom";
 import Swal from "sweetalert2";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
@@ -41,7 +41,7 @@ const useStyles = makeStyles({
 export const Result = () => {
   const [success, setSuccess] = useState(false);
   const styles = useStyles();
-  const { data } = useData();
+  const { data, resetData } = useData();
 
   const entries = Object.entries(data).filter((entry) => entry[0] !== "files");
   const { files } = data;
@@ -49,7 +49,7 @@ export const Result = () => {
   const onSubmit = async () => {
 
     window.ym(90966830, 'reachGoal', 'sendForm')
-    
+
     const formData = new FormData();
     if (data.files) {
       data.files.forEach((file) => {
@@ -69,11 +69,13 @@ export const Result = () => {
     if (res.status === 200) {
       Swal.fire("Данные успешно отправлены");
       setSuccess(true);
+      resetData()
+
     }
   };
 
   if (success) {
-    return <Confetti />;
+    return <Redirect to='/' />;
   }
 
   return (

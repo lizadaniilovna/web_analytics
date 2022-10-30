@@ -60,7 +60,7 @@ export const Step1 = () => {
           error={!!errors.lastName}
           helperText={errors?.lastName?.message}
         />
-        <PrimaryButton onClick={() => { window.ym(90966830, 'reachGoal', 'firstPoint') }}>Продолжить</PrimaryButton>
+        <PrimaryButton onClick={() => { window.ym(90966830, 'reachGoal', 'firstPoint') }} id='personalDataNextButton'>Продолжить</PrimaryButton>
       </Form>
     </MainContainer>
   );
