@@ -71,6 +71,8 @@ export const Result = () => {
       setSuccess(true);
       resetData()
 
+    } else {
+      Swal.fire("Ошибка отправки");
     }
   };
 

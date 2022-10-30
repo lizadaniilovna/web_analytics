@@ -1,1 +1,14 @@
-{"firstName":"asd","lastName":"asd","email":"lazurikdaniilovna@gmail.com","hasPhone":"true","phoneNumber":"+7 930 955 18 16"}
+{
+    "firstName": "",
+    "lastName": "",
+    "email": "",
+    "hasPhone": "false",
+    "phoneNumber": ""
+},
+{
+    "firstName": "asd",
+    "lastName": "Быкова",
+    "email": "lazurikdaniilovna@gmail.com",
+    "hasPhone": "false",
+    "phoneNumber": ""
+}

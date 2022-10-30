@@ -31,7 +31,7 @@ app.post("/", limiter, async (req, res) => {
       });
     }
 
-    fs.writeFile("./uploads/data.json", JSON.stringify(req.body), "utf8", () => {
+    fs.appendFile("./uploads/data.json", `${JSON.stringify(req.body)} \n`, "utf8", () => {
       res.send({
         status: true,
         message: "Data is uploaded",
