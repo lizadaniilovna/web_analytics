@@ -1,14 +1,15 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
-import { useData } from "./DataContext";
-import Typography from "@material-ui/core/Typography";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { PrimaryButton } from "./components/PrimaryButton";
-import { MainContainer } from "./components/MainContainer";
-import { Form } from "./components/Form";
-import { Input } from "./components/Input";
 import * as yup from "yup";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+
+import { useData } from "$common/StudentForm/context/DataContext";
+import { Form } from "$components/Form";
+import { Input } from "$components/Input";
+import { MainContainer } from "$components/MainContainer";
 
 const schema = yup.object().shape({
   firstName: yup
@@ -21,26 +22,23 @@ const schema = yup.object().shape({
     .required("Обязательное поле"),
 });
 
-export const Step1 = () => {
-  const { setValues, data } = useData();
-  const history = useHistory();
+export const Step1 = ({ handleNext, handleBack }) => {
+  const { setValues, studentData } = useData();
+
   const { register, handleSubmit, formState: { errors } } = useForm({
-    defaultValues: { firstName: data.firstName, lastName: data.lastName },
+    defaultValues: { firstName: studentData.firstName, lastName: studentData.lastName },
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
-    history.push("./step2");
     setValues(data);
+    handleNext();
+    window.ym(90966830, 'reachGoal', 'firstPoint')
   };
 
   return (
     <MainContainer>
-      <Typography component="h2" variant="h5">
-        Персональные данные
-      </Typography>
-
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
           {...register('firstName')}
@@ -51,6 +49,7 @@ export const Step1 = () => {
           error={!!errors.firstName}
           helperText={errors?.firstName?.message}
         />
+
         <Input
           {...register('lastName')}
           id="lastName"
@@ -60,7 +59,12 @@ export const Step1 = () => {
           error={!!errors.lastName}
           helperText={errors?.lastName?.message}
         />
-        <PrimaryButton onClick={() => { window.ym(90966830, 'reachGoal', 'firstPoint') }} id='personalDataNextButton'>Продолжить</PrimaryButton>
+
+        <Box sx={{ mb: 2 }}>
+          <Button type="submit" sx={{ mt: 1, mr: 1 }}>
+            Дальше
+          </Button>
+        </Box>
       </Form>
     </MainContainer>
   );

@@ -1,8 +1,6 @@
 import React, { createContext, useState, useContext } from 'react'
 
-const DataContext = createContext()
-
-const initData = {
+const initialValues = {
   firstName: '',
   lastName: '',
   email: '',
@@ -11,21 +9,23 @@ const initData = {
   files: [],
 }
 
+const DataContext = createContext(initialValues)
+
 export const DataProvider = ({ children }) => {
-  const [data, setData] = useState(initData);
+  const [studentData, setStudentData] = useState(initialValues);
 
   const resetData = () => {
-    setData(initData)
+    setStudentData(initialValues)
   }
 
   const setValues = (values) => {
-    setData(prevData => ({
+    setStudentData(prevData => ({
       ...prevData,
       ...values
     }))
   }
 
-  return <DataContext.Provider value={{ data, setValues, resetData }}>
+  return <DataContext.Provider value={{ studentData, setValues, resetData }}>
     {children}
   </DataContext.Provider>
 }

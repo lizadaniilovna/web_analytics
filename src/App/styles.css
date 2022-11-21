@@ -22,3 +22,9 @@ h1 {
   color: deeppink;
   text-shadow: 1px 1px darkmagenta;
 }
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

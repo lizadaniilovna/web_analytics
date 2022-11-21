@@ -1,17 +1,18 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useData } from "./DataContext";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Typography from "@material-ui/core/Typography";
-import Checkbox from "@material-ui/core/Checkbox";
-import { PrimaryButton } from "./components/PrimaryButton";
-import { MainContainer } from "./components/MainContainer";
-import { Form } from "./components/Form";
-import { Input } from "./components/Input";
-import * as yup from "yup";
 import { parsePhoneNumberFromString } from 'libphonenumber-js'
+import * as yup from "yup";
+
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { useData } from "$common/StudentForm/context/DataContext";
+import { MainContainer } from "$components/MainContainer";
+import { Form } from "$components/Form";
+import { Input } from "$components/Input";
 
 
 const schema = yup.object().shape({
@@ -38,14 +39,13 @@ const normalizePhoneNumber = (value) => {
   );
 };
 
-export const Step2 = () => {
-  const { setValues, data } = useData();
-  const history = useHistory();
+export const Step2 = ({ handleNext, handleBack }) => {
+  const { setValues, studentData } = useData();
   const { register, handleSubmit, watch, formState: { errors } } = useForm({
     defaultValues: {
-      email: data.email,
-      hasPhone: data.hasPhone,
-      phoneNumber: data.phoneNumber,
+      email: studentData.email,
+      hasPhone: studentData.hasPhone,
+      phoneNumber: studentData.phoneNumber,
     },
     mode: "onBlur",
     resolver: yupResolver(schema),
@@ -53,15 +53,13 @@ export const Step2 = () => {
   const hasPhone = watch("hasPhone");
 
   const onSubmit = (data) => {
-    history.push("./step3");
+    handleNext();
+    window.ym(90966830, 'reachGoal', 'secondPoint')
     setValues(data);
   };
 
   return (
     <MainContainer>
-      <Typography component="h2" variant="h5">
-        Контактные данные
-      </Typography>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
           {...register('email')}
@@ -76,7 +74,7 @@ export const Step2 = () => {
 
         <FormControlLabel
           control={
-            <Checkbox {...register('hasPhone')} id="hasPhone" defaultValue={data.hasPhone} defaultChecked={data.hasPhone} color="primary" name="hasPhone" />
+            <Checkbox {...register('hasPhone')} id="hasPhone" name='hasPhone' checked={hasPhone} color="primary" />
           }
           label="Ввести номер телефона"
         />
@@ -95,7 +93,20 @@ export const Step2 = () => {
             }}
           />
         )}
-        <PrimaryButton onClick={() => { window.ym(90966830,'reachGoal','secondPoint')}}>Продолжить</PrimaryButton>
+
+        <Box sx={{ mb: 2 }}>
+          <Button
+            color="inherit"
+            onClick={handleBack}
+            sx={{ mt: 1, mr: 1 }}
+          >
+            Назад
+          </Button>
+
+          <Button type="submit" sx={{ mt: 1, mr: 1 }}>
+            Дальше
+          </Button>
+        </Box>
       </Form>
     </MainContainer>
   );
