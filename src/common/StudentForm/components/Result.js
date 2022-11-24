@@ -1,7 +1,7 @@
 import React from "react";
 import Swal from "sweetalert2";
 
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -18,121 +18,131 @@ import InsertDriveFile from "@mui/icons-material/InsertDriveFile";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-import { useData } from "$common/StudentForm/context/DataContext";
-import { MainContainer } from "$components/MainContainer";
-
+import {useData} from "$common/StudentForm/context/DataContext";
+import {MainContainer} from "$components/MainContainer";
+import {useShowNotification} from "$common/NotificationServise";
 
 
 const fieldLabelDictionaty = {
-  firstName: 'Имя',
-  lastName: 'Фамилия',
-  email: 'Почта',
-  hasPhone: 'Наличие телефона',
-  phoneNumber: 'Номер телефона',
-  files: 'Файлы',
+    firstName: 'Имя',
+    lastName: 'Фамилия',
+    email: 'Почта',
+    hasPhone: 'Наличие телефона',
+    phoneNumber: 'Номер телефона',
+    files: 'Файлы',
 }
 
 const useStyles = makeStyles({
-  root: {
-    marginBottom: "30px",
-  },
-  table: {
-    marginBottom: "30px",
-  },
+    root: {
+        marginBottom: "30px",
+    },
+    table: {
+        marginBottom: "30px",
+    },
 });
 
-export const Result = ({ handleNext, handleBack }) => {
-  const styles = useStyles();
-  const { resetData, studentData } = useData();
-  const formData = new FormData();
+export const Result = ({handleNext, handleBack, readonly = false}) => {
+    const showNotification = useShowNotification()
+    const styles = useStyles();
+    const {studentData} = useData();
+    const formData = new FormData();
 
-  const entries = Object.entries(studentData).filter((entry) => entry[0] !== "files");
+    const entries = Object.entries(studentData).filter((entry) => entry[0] !== "files");
 
-  const onSubmit = async () => {
+    const handleSubmit = async () => {
+        window.ym(90966830, 'reachGoal', 'sendForm')
 
-    window.ym(90966830, 'reachGoal', 'sendForm')
+        if (studentData.files) {
+            studentData.files.forEach((file) => {
+                formData.append("files", file, file.name);
+            });
+        }
 
-    if (studentData.files) {
-      studentData.files.forEach((file) => {
-        formData.append("files", file, file.name);
-      });
-    }
+        entries.forEach((entry) => {
+            formData.append(entry[0], entry[1]);
+        });
 
-    entries.forEach((entry) => {
-      formData.append(entry[0], entry[1]);
-    });
+        const res = await fetch("https://webanalyticsserver.vercel.app/", {
+            method: "POST",
+            body: formData,
+        });
 
-    const res = await fetch("https://webanalyticsserver.vercel.app/", {
-      method: "POST",
-      body: formData,
-    });
+        if (res.status === 200) {
+            showNotification({
+                text: 'Данные успешно отправлены',
+                type: 'success'
+            })
+            localStorage.setItem('resume', JSON.stringify(studentData))
+            handleNext?.()
+        } else {
+            showNotification({
+                text: 'Ошибка отправки данных',
+                type: 'error'
+            })
+            Swal.fire("Ошибка отправки");
+        }
+    };
 
-    if (res.status === 200) {
-      resetData()
-      handleNext()
+    return (
+        <MainContainer>
+            <TableContainer className={styles.root} component={Paper}>
+                <Table className={styles.table} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell><b>Название</b></TableCell>
+                            <TableCell align="right"><b>Значение</b></TableCell>
+                        </TableRow>
+                    </TableHead>
 
-    } else {
-      Swal.fire("Ошибка отправки");
-    }
-  };
+                    <TableBody>
+                        {entries.map((entry) => (
+                            <TableRow key={entry[0]}>
+                                <TableCell component="th" scope="row">
+                                    {fieldLabelDictionaty[entry[0]]}
+                                </TableCell>
+                                <TableCell align="right">{entry[1] ? entry[1].toString() : '—'}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
 
-  return (
-    <MainContainer>
-      <TableContainer className={styles.root} component={Paper}>
-        <Table className={styles.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell><b>Название</b></TableCell>
-              <TableCell align="right"><b>Значение</b></TableCell>
-            </TableRow>
-          </TableHead>
+            {studentData.files?.length > 0 && (
+                <>
+                    <Typography component="h2" variant="h5">
+                        📦 Файлы
+                    </Typography>
+                    <List>
+                        {studentData.files.map((f, index) => (
+                            <ListItem key={index}>
+                                <ListItemIcon>
+                                    <InsertDriveFile/>
+                                </ListItemIcon>
+                                <ListItemText primary={f.name} secondary={f.size}/>
+                            </ListItem>
+                        ))}
+                    </List>
+                </>
+            )}
 
-          <TableBody>
-            {entries.map((entry) => (
-              <TableRow key={entry[0]}>
-                <TableCell component="th" scope="row">
-                  {fieldLabelDictionaty[entry[0]]}
-                </TableCell>
-                <TableCell align="right">{entry[1] ? entry[1].toString() : '—'}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            {
+                !readonly && <Box sx={{mb: 2}} alignSelf='flex-start'>
+                    <Button
+                        color="inherit"
+                        onClick={handleBack}
+                        sx={{mt: 1, mr: 1}}
+                    >
+                        Назад
+                    </Button>
 
-      {studentData.files?.length > 0 && (
-        <>
-          <Typography component="h2" variant="h5">
-            📦 Файлы
-          </Typography>
-          <List>
-            {studentData.files.map((f, index) => (
-              <ListItem key={index}>
-                <ListItemIcon>
-                  <InsertDriveFile />
-                </ListItemIcon>
-                <ListItemText primary={f.name} secondary={f.size} />
-              </ListItem>
-            ))}
-          </List>
-        </>
-      )}
+                    <Button
+                        onClick={handleSubmit}
+                        sx={{mt: 1, mr: 1}}>
+                        Отправить
+                    </Button>
+                </Box>
+            }
 
-      <Box sx={{ mb: 2 }} alignSelf='flex-start'>
-        <Button
-          color="inherit"
-          onClick={handleBack}
-          sx={{ mt: 1, mr: 1 }}
-        >
-          Назад
-        </Button>
-
-        <Button
-          onClick={onSubmit}
-          sx={{ mt: 1, mr: 1 }}>
-          Отправить
-        </Button>
-      </Box>
-    </MainContainer>
-  );
+        </MainContainer>
+    );
 };

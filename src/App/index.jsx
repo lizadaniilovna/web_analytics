@@ -1,28 +1,27 @@
 import React from "react";
+import {BrowserRouter} from "react-router-dom";
 
-import Box from '@mui/material/Box';
-
-import { StudentForm } from '$common/StudentForm'
-import { Footer } from '$common/Footer'
+import {Footer} from '$common/Footer'
+import {Navigation} from "$common/Navigation";
+import {LayoutRouter} from "$common/LayoutRouter";
+import {NotificationProvider} from "$common/NotificationServise";
 
 import './styles.css';
 
+//https://colorscheme.ru/#3y61Tp5Xtw0w0 - цветовая схема
+
 const App = () => {
-  return (
-    <div className="App">
-      <Box
-        display='flex'
-        alignItems='center'
-        justifyContent='center'
-        flex='1 0 auto'
-      >
-        <StudentForm />
-      </Box>
-
-
-      <Footer />
-    </div>
-  );
+    return (
+        <div className="App">
+            <NotificationProvider>
+                <BrowserRouter>
+                    <Navigation/>
+                    <LayoutRouter/>
+                </BrowserRouter>
+                <Footer/>
+            </NotificationProvider>
+        </div>
+    );
 }
 
 export default App;
