@@ -22,9 +22,10 @@ export const Footer = () => (
                     data-lang="ru"/>
             </a>
 
+
             <a href="https://top-fwz1.mail.ru/jump?from=3271888">
                 <img
-                    src="https://top-fwz1.mail.ru/counter?id=3271888;t=444;l=1"
+                    src="https://top-fwz1.mail.ru/counter?id=3271888;t=617;l=1"
                     style={{width: "88px", height: "31px", border: 0,}}
                     alt="Top.Mail.Ru"
                 />
