@@ -1,5 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Microbe&display=swap');
+
+.App {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
 body {
     margin: 0;

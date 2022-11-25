@@ -12,7 +12,7 @@ export const PageInProgress = ({pageName = ''}) => (
         }}
     >
         <Box alignItems='center' display='flex' gap='12px'>
-            <Typography variant="h5"
+            <Typography variant="h4"
                         sx={{
                             background: `conic-gradient(
                                 #CA4246 16.666%,
@@ -28,7 +28,7 @@ export const PageInProgress = ({pageName = ''}) => (
                             backgroundSize: '57%',
                             backgroundColor: "CA4246",
                             backgroundRepeat: 'repeat',
-                            fontFamily: '"Work Sans", sans-serif',
+                            fontFamily: '"Rubik Microbe", cursive',
                             backgroundClip: "text",
                             fontWeight: '800',
                             WebkitTextFillColor: 'transparent',
