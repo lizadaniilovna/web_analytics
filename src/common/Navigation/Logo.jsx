@@ -17,6 +17,7 @@ const MD = () => (
                     variant="h6"
                     noWrap
                     component="a"
+                    className='notranslate'
                     sx={{
                         mr: 2,
                         display: {xs: 'none', md: 'flex'},
@@ -24,6 +25,7 @@ const MD = () => (
                         fontWeight: 700,
                         letterSpacing: '.3rem',
                         color: '#35F6A8',
+                        animation: 'none'
                     }}
                 >
                     {LOGO_NAME}
@@ -43,6 +45,7 @@ const XS = () => (
                     variant="h5"
                     noWrap
                     component="a"
+                    className='notranslate'
                     sx={{
                         mr: 2,
                         display: {xs: 'flex', md: 'none'},
