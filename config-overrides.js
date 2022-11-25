@@ -4,7 +4,7 @@ module.exports = function override(config, env) {
     alias({
         '$components': 'src/components',
         '$common': 'src/common',
-        'pages': 'src/pages',
+        '$pages': 'src/pages',
     })(config);
 
     return config;

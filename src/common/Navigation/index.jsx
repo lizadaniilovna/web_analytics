@@ -82,7 +82,7 @@ export const Navigation = () => {
                             onClose={handleCloseUserMenu}
                         >
                             {routes.userPages.map(({name, path}) => (
-                                <MenuItem key={name} onClick={handleCloseUserMenu}>
+                                <MenuItem key={path} onClick={handleCloseUserMenu}>
                                     <Link to={path}>
                                         <Typography textAlign="center">{name}</Typography>
                                     </Link>

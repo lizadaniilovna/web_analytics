@@ -9,7 +9,7 @@
       "$common/*": [
         "src/common/*"
       ],
-      "pages/*": [
+      "$pages/*": [
         "src/pages/*"
       ]
     }

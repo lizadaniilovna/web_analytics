@@ -43,7 +43,7 @@ const XS = ({handleOpenNavMenu, handleCloseNavMenu, anchorElNav}) => (
             }}
         >
             {routes.mainPages.map(({name, path}) => (
-                <MenuItem key={name} onClick={handleCloseNavMenu}>
+                <MenuItem key={path} onClick={handleCloseNavMenu}>
                     <Link to={path}>
                         <Typography textAlign="center">{name}</Typography>
                     </Link>
@@ -56,9 +56,9 @@ const XS = ({handleOpenNavMenu, handleCloseNavMenu, anchorElNav}) => (
 const MD = ({handleCloseNavMenu}) => (
     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
         {routes.mainPages.map(({name, path}) => (
-            <Link to={path}>
+            <Link to={path} key={path}>
                 <Button
-                    key={name}
+                    key={path}
                     onClick={handleCloseNavMenu}
                     sx={{my: 2, color: 'white', display: 'block'}}
                 >
