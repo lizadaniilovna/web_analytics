@@ -1,10 +1,11 @@
 import React from "react";
-import {BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
-import {Footer} from '$common/Footer'
-import {Navigation} from "$common/Navigation";
-import {LayoutRouter} from "$common/LayoutRouter";
-import {NotificationProvider} from "$common/NotificationServise";
+import { Footer } from '$common/Footer'
+import { Navigation } from "$common/Navigation";
+import { LayoutRouter } from "$common/LayoutRouter";
+import { NotificationProvider } from "$common/NotificationServise";
+import { GoogleAnalyticsRouting } from "$common/GoogleAnalyticsRouting";
 
 import './styles.css';
 
@@ -15,10 +16,11 @@ const App = () => {
         <div className="App">
             <NotificationProvider>
                 <BrowserRouter>
-                    <Navigation/>
-                    <LayoutRouter/>
+                    <Navigation />
+                    <LayoutRouter />
+                    <GoogleAnalyticsRouting />
                 </BrowserRouter>
-                <Footer/>
+                <Footer />
             </NotificationProvider>
         </div>
     );
